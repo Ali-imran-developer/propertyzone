@@ -15,8 +15,8 @@ class Navbar extends Component {
 					<div className="col-md-7">
 					<div className="ltn__top-bar-menu">
 						<ul>
-						<li><a href="mailto:info@webmail.com?Subject=Flower%20greetings%20to%20you"><i className="icon-mail" /> info@webmail.com</a></li>
-						<li><a href="locations.html"><i className="icon-placeholder" /> 15/A, Nest Tower, NYC</a></li>
+						<li><a href="mailto:info@webmail.com?Subject=Flower%20greetings%20to%20you"><i className="icon-mail" />aliimran744@gmail.com</a></li>
+						<li><a href="locations.html"><i className="icon-placeholder" />Faisal Heights, FSD</a></li>
 						</ul>
 					</div>
 					</div>

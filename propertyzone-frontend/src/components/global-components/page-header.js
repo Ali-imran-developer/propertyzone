@@ -13,7 +13,7 @@ class Page_header extends Component {
 
         return (
 
-		<div className={"ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image "+CustomClass} data-bs-bg={publicUrl+"assets/img/bg/14.jpg"}>
+		<div className={"ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image "+CustomClass} data-bs-bg={publicUrl+"assets/img/pictures/banner.jpg"}>
 			<div className="container">
 				<div className="row">
 				<div className="col-lg-12">
@@ -30,11 +30,9 @@ class Page_header extends Component {
 				</div>
 			</div>
 		</div>
-
-
         )
     }
 }
 
 
-export default Page_header
+export default Page_header;

@@ -1,0 +1,10 @@
+import { combineReducers } from "@reduxjs/toolkit";
+import propertyReducer from "./property-slice";
+import authReducer from "./authSlice";
+
+const rootReducer = combineReducers({
+  Auth: authReducer,
+  Properties: propertyReducer,
+});
+
+export default rootReducer;
