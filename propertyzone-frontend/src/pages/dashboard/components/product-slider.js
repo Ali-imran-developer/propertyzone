@@ -1,20 +1,28 @@
 import { useEffect } from "react";
-import "../../../index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useProperties } from "../../../hooks/property";
 import { useAppSelector } from "../../../hooks/store-hook";
 import { ensureArray } from "../../../helper-functions/formater-helper";
-import Slider from "../../../components/shared/slider";
 
 const ProductSlider = () => {
+  const navigate = useNavigate();
   let publicUrl = process.env.PUBLIC_URL + "/";
   const { handleGetProperties } = useProperties();
   const { propertyData } = useAppSelector((state) => state.Properties);
+  const initialParams = {
+    page: 1,
+    limit: 3,
+    search: "",
+  };
 
   useEffect(() => {
-    handleGetProperties()
+    handleGetProperties(initialParams);
 
-  }, [])
+  }, [initialParams?.page, initialParams?.limit, initialParams?.search])
+
+  const handleNavigate = (item) => {
+    navigate(`/product-details/${item._id}`, { state: { item } });
+  };
 
   return (
     <div>
@@ -31,23 +39,20 @@ const ProductSlider = () => {
             </div>
           </div>
 
-          {/* listing properties */}
-          {/* <div className="grid grid-cols-3 row ltn__product-slider-item-three-active slick-arrow-1"> */}
-          {/* <Slider> */}
-            <div className="grid grid-cols-3 gap-4 row">
+            <div className="row" style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
               {ensureArray(propertyData?.properties)?.map((item, index) => (
                 <div key={index} className="ltn__product-item ltn__product-item-4 text-center---">
                   <div className="product-img go-top">
-                    <Link to="/product-details" className="min-w-lg max-h-60">
+                    <div onClick={() => handleNavigate(item)} style={{ minWidth: "18rem", maxHeight: "12rem" }}>
                       <img
                         src={
                           item?.images[0] ??
                           "https://www.shorekids.co.nz/wp-content/uploads/2014/08/image-placeholder.jpg"
                         }
                         alt={item?.title ?? ""}
-                        className="w-full h-auto object-cover"
+                          style={{width: "100%", height: "auto", objectFit: "cover"}}
                       />
-                    </Link>
+                    </div>
                     <div className="product-badge">
                       <ul>
                         <li className="sale-badge bg-green">
@@ -61,7 +66,7 @@ const ProductSlider = () => {
                           <li>
                             <Link to="/contact">
                               <i className="flaticon-pin" />
-                              {item?.title ?? ""}
+                              {item?.address?.address ?? ""}, {item?.address?.city ?? ""}
                             </Link>
                           </li>
                         </ul>
@@ -86,7 +91,7 @@ const ProductSlider = () => {
                       </span>
                     </div>
                     <h2 className="product-title go-top">
-                      <Link to="/product-details">New Apartment Nice View</Link>
+                      <Link to="/product-details">{item?.title ?? ""}</Link>
                     </h2>
                     <div className="product-description">
                       <p>{item?.description ?? ""}</p>
@@ -116,7 +121,6 @@ const ProductSlider = () => {
                 </div>
               ))}
             </div>
-          {/* </Slider> */}
         </div>
       </div>
 

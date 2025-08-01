@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from './global-components/navbar';
 import PageHeader from './global-components/page-header';
 import BlogGrid from './blog-components/blog-grid';

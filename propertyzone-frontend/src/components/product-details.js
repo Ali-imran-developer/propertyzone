@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from './global-components/navbar';
 import PageHeader from './global-components/page-header';
 import ProductSlider from './shop-components/product-slider-v1';

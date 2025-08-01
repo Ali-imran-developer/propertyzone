@@ -15,5 +15,4 @@ const Shop_V1 = () => {
     </div>
 }
 
-export default Shop_V1
-
+export default Shop_V1;

@@ -23,10 +23,10 @@ export const useProperties = () => {
     }
   };
 
-  const handleGetProperties = async () => {
+  const handleGetProperties = async (queryParams) => {
     try {
       setLoading(true);
-      const data = await propertiesController.getProperties();
+      const data = await propertiesController.getProperties(queryParams);
       dispatch(setProperties(data));
       return data;
     } catch (error) {

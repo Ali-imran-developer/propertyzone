@@ -1,100 +1,90 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
+import { Link } from "react-router-dom";
 
-class Gallery extends Component {
+const galleryItems = [
+//   {
+//     img: "/assets/img/gallery/gallery1.jpg",
+//     title: "Manhattan",
+//     subtitle: "Heart of NYC",
+//     href: "/assets/img/gallery/gallery1.jpg",
+//   },
+  {
+    img: "/assets/img/gallery/gallery2.jpg",
+    title: "Upper East Side",
+    subtitle: "The luxury crib",
+    href: "/assets/img/gallery/gallery2.jpg",
+  },
+  {
+    img: "/assets/img/gallery/gallery3.jpg",
+    title: "Jersey City",
+    subtitle: "The Best City",
+    href: "/assets/img/gallery/gallery3.jpg",
+  },
+  {
+    img: "/assets/img/gallery/gallery4.jpg",
+    title: "Queens",
+    subtitle: "Friendly neighborhood",
+    href: "/assets/img/gallery/gallery4.jpg",
+  },
+  {
+    img: "/assets/img/gallery/gallery5.jpg",
+    title: "Greenville",
+    subtitle: "The perfect city",
+    href: "/assets/img/gallery/gallery5.jpg",
+  },
+  {
+    img: "/assets/img/gallery/gallery5.jpg",
+    title: "Greenville",
+    subtitle: "The perfect city",
+    href: "/assets/img/gallery/gallery5.jpg",
+  },
+];
 
-    render() {
+const Gallery = () => {
+  return (
+    <div className="ltn__img-slider-area">
+      <div className="container-fluid">
+        <div className="row ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
+          {galleryItems.map((item, index) => (
+            <div className="col-lg-12" key={index}>
+              <div className="ltn__img-slide-item-4">
+                <a
+                  href={item.href}
+                  data-rel="lightcase:myCollection"
+                  style={index === 0 ? { width: "400px", height: "100%" } : {}}
+                >
+                  <img
+                    src={item.img}
+                    alt="Image"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                </a>
+                <div className="ltn__img-slide-info">
+                  <div className="ltn__img-slide-info-brief gp-top">
+                    <h6>{item.subtitle}</h6>
+                    <h1>
+                      <Link to="/portfolio-details">{item.title}</Link>
+                    </h1>
+                  </div>
+                  <div className="btn-wrapper go-top">
+                    <Link
+                      to="/portfolio-details"
+                      className="btn theme-btn-1 btn-effect-1 text-uppercase"
+                    >
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-        let publicUrl = process.env.PUBLIC_URL+'/'
-
-    return <div className="ltn__img-slider-area">
-				<div className="container-fluid">
-				<div className="row ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
-					<div className="col-lg-12">
-					<div className="ltn__img-slide-item-4">
-						<a href={publicUrl+"assets/img/img-slide/21.jpg"} data-rel="lightcase:myCollection">
-						<img src={publicUrl+"assets/img/img-slide/21.jpg"} alt="Image" />
-						</a>
-						<div className="ltn__img-slide-info">
-						<div className="ltn__img-slide-info-brief gp-top">
-							<h6>Heart of NYC</h6>
-							<h1><Link to="/portfolio-details">Manhattan </Link></h1>
-						</div>
-						<div className="btn-wrapper go-top">
-							<Link to="/portfolio-details" className="btn theme-btn-1 btn-effect-1 text-uppercase">Details</Link>
-						</div>
-						</div>
-					</div>
-					</div>
-					<div className="col-lg-12">
-					<div className="ltn__img-slide-item-4">
-						<a href={publicUrl+"assets/img/img-slide/22.jpg"} data-rel="lightcase:myCollection">
-						<img src={publicUrl+"assets/img/img-slide/22.jpg"} alt="Image" />
-						</a>
-						<div className="ltn__img-slide-info">
-						<div className="ltn__img-slide-info-brief gp-top">
-							<h6>The luxury crib</h6>
-							<h1><Link to="/portfolio-details">Upper East Side</Link></h1>
-						</div>
-						<div className="btn-wrapper go-top">
-							<Link to="/portfolio-details" className="btn theme-btn-1 btn-effect-1 text-uppercase">Details</Link>
-						</div>
-						</div>
-					</div>
-					</div>
-					<div className="col-lg-12">
-					<div className="ltn__img-slide-item-4">
-						<a href={publicUrl+"assets/img/img-slide/23.jpg"} data-rel="lightcase:myCollection">
-						<img src={publicUrl+"assets/img/img-slide/23.jpg"} alt="Image" />
-						</a>
-						<div className="ltn__img-slide-info">
-						<div className="ltn__img-slide-info-brief gp-top">
-							<h6>The Best City</h6>
-							<h1><Link to="/portfolio-details">Jersey City</Link></h1>
-						</div>
-						<div className="btn-wrapper go-top">
-							<Link to="/portfolio-details" className="btn theme-btn-1 btn-effect-1 text-uppercase">Details</Link>
-						</div>
-						</div>
-					</div>
-					</div>
-					<div className="col-lg-12">
-					<div className="ltn__img-slide-item-4">
-						<a href={publicUrl+"assets/img/img-slide/24.jpg"} data-rel="lightcase:myCollection">
-						<img src={publicUrl+"assets/img/img-slide/24.jpg"} alt="Image" />
-						</a>
-						<div className="ltn__img-slide-info">
-						<div className="ltn__img-slide-info-brief gp-top">
-							<h6>Friendly neighborhood</h6>
-							<h1><Link to="/portfolio-details">Queens </Link></h1>
-						</div>
-						<div className="btn-wrapper go-top">
-							<Link to="/portfolio-details" className="btn theme-btn-1 btn-effect-1 text-uppercase">Details</Link>
-						</div>
-						</div>
-					</div>
-					</div>
-					<div className="col-lg-12">
-					<div className="ltn__img-slide-item-4">
-						<a href={publicUrl+"assets/img/img-slide/22.jpg"} data-rel="lightcase:myCollection">
-						<img src={publicUrl+"assets/img/img-slide/22.jpg"} alt="Image" />
-						</a>
-						<div className="ltn__img-slide-info">
-						<div className="ltn__img-slide-info-brief gp-top">
-							<h6>The perfect city</h6>
-							<h1><Link to="/portfolio-details">Greenville</Link></h1>
-						</div>
-						<div className="btn-wrapper go-top">
-							<Link to="/portfolio-details" className="btn theme-btn-1 btn-effect-1 text-uppercase">Details</Link>
-						</div>
-						</div>
-					</div>
-					</div>
-				</div>
-				</div>
-			</div>
-        }
-}
-
-export default Gallery
+export default Gallery;

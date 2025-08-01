@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Page_header extends Component {
+class PageHeader extends Component {
 
     render() {
 
@@ -35,4 +35,4 @@ class Page_header extends Component {
 }
 
 
-export default Page_header;
+export default PageHeader;

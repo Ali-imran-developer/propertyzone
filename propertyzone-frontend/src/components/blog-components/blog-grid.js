@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 class BlogGrid extends Component {
   render() {
     let publicUrl = process.env.PUBLIC_URL+'/'
-    let imagealt = 'image'
     return (
 		<div className="ltn__blog-area ltn__blog-item-3-normal mb-100 go-top">
 			<div className="container">

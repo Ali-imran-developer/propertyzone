@@ -1,6 +1,6 @@
 import axios from "axios";
 import AuthController from "../controllers/authController";
-export const APP_BASE_URL = "http://localhost:5000";
+export const APP_BASE_URL = process.env.REACT_APP_URL;
 
 export const apiClient = axios.create({
   baseURL: APP_BASE_URL,

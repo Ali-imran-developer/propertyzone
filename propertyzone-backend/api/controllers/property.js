@@ -103,15 +103,29 @@ const createProperty = async (req, res) => {
 
 const getProperties = async (req, res) => {
   try {
-    const properties = await Property.find();
+    const { page = 1, limit = 10, search = "" } = req.query;
+    const query = {
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { "address.address": { $regex: search, $options: "i" } },
+        { "address.city": { $regex: search, $options: "i" } },
+        { "address.country": { $regex: search, $options: "i" } },
+      ],
+    };
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const totalProperties = await Property.countDocuments(query);
+    const properties = await Property.find(query).skip(skip).limit(parseInt(limit)).sort({ createdAt: -1 });
     res.json({
       success: true,
-      count: properties.length,
+      page: parseInt(page),
+      limit: parseInt(limit),
+      totalProperties,
       properties,
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
+    console.error("Error fetching properties:", error);
+    res.status(500).json({
       success: false,
       message: "Internal server error",
     });

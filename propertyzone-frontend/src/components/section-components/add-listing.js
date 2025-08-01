@@ -1,41 +1,44 @@
 import { useProperties } from "../../hooks/property";
 import { useFormik } from "formik";
 import { convertToBase64 } from "../../helper-functions/base64";
+import { ensureArray } from "../../helper-functions/formater-helper";
+import { useEffect, useState } from "react";
 
 const AddListing = () => {
+  const [selectedStatus, setSelectedStatus] = useState("");
   const { handleCreateProperties, Loading } = useProperties();
 
   const initialValues = {
     images: [],
-    title: "", // done
-    description: "", // done
-    bedrooms: null, // done
-    bathrooms: null, // done
-    rooms: null, // done
-    homeArea: null, // done
-    builted: null, // done
-    lotArea: null, // done
-    lotDimensions: null, // done
-    price: null, // done
-    floor: null, // done
-    note: "", // done
-    status: "", // done
+    title: "",
+    description: "",
+    bedrooms: "",
+    bathrooms: "",
+    rooms: "",
+    homeArea: "",
+    builted: "",
+    lotArea: "",
+    lotDimensions: "",
+    price: "",
+    floor: "",
+    note: "",
+    status: "",
     address: {
-      // done
-      address: "", // done
-      country: "", // done
-      city: "", // done
-      zip: null, // done
+     
+      address: "",
+      country: "",
+      city: "",
+      zip: "",
     },
     area: {
-      livingRoom: null, // done
-      garage: null, // done
-      dining: null, // done
-      bedroom: null, // done
-      bathroom: null, // done
-      gym: null, // done
-      garden: null, // done
-      parking: null, // done
+      livingRoom: "",
+      garage: "",
+      dining: "",
+      bedroom: "",
+      bathroom: "",
+      gym: "",
+      garden: "",
+      parking: "",
     },
   };
 
@@ -45,10 +48,10 @@ const AddListing = () => {
       try {
         console.log("values", values);
         handleCreateProperties(values);
+        resetForm({ values: initialValues });
+        setSelectedStatus("");
       } catch (error) {
         console.error("Error submitting order:", error);
-      } finally{
-        resetForm();
       }
     },
   });
@@ -64,6 +67,27 @@ const AddListing = () => {
     }
     formik.setFieldValue("images", base64Images);
   };
+
+  const statuses = [
+    {
+      label: "Rentals",
+      value: "rentals",
+    },
+    {
+      label: "Sales",
+      value: "sales",
+    }
+  ]
+
+  const statusOptions = ensureArray(statuses)?.map((item) => ({
+    label: item?.label,
+    value: item?.value,
+  }));
+
+  useEffect(() => {
+    formik?.setFieldValue("status", selectedStatus)
+
+  }, [selectedStatus])
 
   return (
     <div className="ltn__appointment-area pb-120">
@@ -104,9 +128,9 @@ const AddListing = () => {
                       <input
                         type="number"
                         placeholder="Price *"
-                        value={formik.values.price}
+                        value={formik?.values?.price}
                         onChange={(e) =>
-                          formik.setFieldValue("price", e.target.value)
+                          formik.setFieldValue("price", Number(e.target.value))
                         }
                       />
                     </div>
@@ -114,15 +138,15 @@ const AddListing = () => {
                   <div className="col-md-6">
                     <div className="input-item">
                       <select
-                        className="nice-select"
-                        value={formik?.values?.status}
-                        onChange={(e) =>
-                          formik.setFieldValue("status", e.target.value)
-                        }
+                        className=""
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.target.value)}
                       >
-                        <option value="">Select Status</option>
-                        <option value="rentals">Rentals</option>
-                        <option value="sales">Sales</option>
+                        {statusOptions?.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -203,7 +227,7 @@ const AddListing = () => {
                         placeholder="Zip *"
                         value={formik?.values?.address?.zip}
                         onChange={(e) =>
-                          formik?.setFieldValue("address.zip", e.target.value)
+                          formik?.setFieldValue("address.zip", Number(e.target.value))
                         }
                       />
                     </div>
@@ -219,7 +243,7 @@ const AddListing = () => {
                         placeholder="Total Bedrooms"
                         value={formik?.values?.bedrooms}
                         onChange={(e) =>
-                          formik?.setFieldValue("bedrooms", e.target.value)
+                          formik?.setFieldValue("bedrooms", Number(e.target.value))
                         }
                       />
                     </div>
@@ -231,7 +255,7 @@ const AddListing = () => {
                         placeholder="Total Rooms"
                         value={formik?.values?.rooms}
                         onChange={(e) =>
-                          formik?.setFieldValue("rooms", e.target.value)
+                          formik?.setFieldValue("rooms", Number(e.target.value))
                         }
                       />
                     </div>
@@ -243,7 +267,7 @@ const AddListing = () => {
                         placeholder="Total Bathrooms"
                         value={formik?.values?.bathrooms}
                         onChange={(e) =>
-                          formik?.setFieldValue("bathrooms", e.target.value)
+                          formik?.setFieldValue("bathrooms", Number(e.target.value))
                         }
                       />
                     </div>
@@ -255,7 +279,7 @@ const AddListing = () => {
                         placeholder="Total Floors"
                         value={formik?.values?.floor}
                         onChange={(e) =>
-                          formik?.setFieldValue("floor", e.target.value)
+                          formik?.setFieldValue("floor", Number(e.target.value))
                         }
                       />
                     </div>
@@ -281,7 +305,7 @@ const AddListing = () => {
                         placeholder="Year Built *"
                         value={formik?.values?.builted}
                         onChange={(e) =>
-                          formik?.setFieldValue("builted", e.target.value)
+                          formik?.setFieldValue("builted", Number(e.target.value))
                         }
                       />
                     </div>
@@ -293,7 +317,7 @@ const AddListing = () => {
                         placeholder="HomeArea in ft *"
                         value={formik?.values?.homeArea}
                         onChange={(e) =>
-                          formik?.setFieldValue("homeArea", e.target.value)
+                          formik?.setFieldValue("homeArea", Number(e.target.value))
                         }
                       />
                     </div>
@@ -305,7 +329,7 @@ const AddListing = () => {
                         placeholder="lotArea in ft *"
                         value={formik?.values?.lotArea}
                         onChange={(e) =>
-                          formik?.setFieldValue("lotArea", e.target.value)
+                          formik?.setFieldValue("lotArea", Number(e.target.value))
                         }
                       />
                     </div>
@@ -317,7 +341,7 @@ const AddListing = () => {
                         placeholder="lotDimensions in ft"
                         value={formik?.values?.lotDimensions}
                         onChange={(e) =>
-                          formik?.setFieldValue("lotDimensions", e.target.value)
+                          formik?.setFieldValue("lotDimensions", Number(e.target.value))
                         }
                       />
                     </div>
@@ -331,7 +355,7 @@ const AddListing = () => {
                         onChange={(e) =>
                           formik?.setFieldValue(
                             "area.livingRoom",
-                            e.target.value
+                            Number(e.target.value)
                           )
                         }
                       />
@@ -344,7 +368,7 @@ const AddListing = () => {
                         placeholder="GarageArea in ft"
                         value={formik?.values?.area?.garage}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.garage", e.target.value)
+                          formik?.setFieldValue("area.garage", Number(e.target.value))
                         }
                       />
                     </div>
@@ -356,7 +380,7 @@ const AddListing = () => {
                         placeholder="DiningArea in ft"
                         value={formik?.values?.area?.dining}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.dining", e.target.value)
+                          formik?.setFieldValue("area.dining", Number(e.target.value))
                         }
                       />
                     </div>
@@ -368,7 +392,7 @@ const AddListing = () => {
                         placeholder="BedroomArea in ft"
                         value={formik?.values?.area?.bedroom}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.bedroom", e.target.value)
+                          formik?.setFieldValue("area.bedroom", Number(e.target.value))
                         }
                       />
                     </div>
@@ -380,7 +404,7 @@ const AddListing = () => {
                         placeholder="BathroomArea in ft"
                         value={formik?.values?.area?.bathroom}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.bathroom", e.target.value)
+                          formik?.setFieldValue("area.bathroom", Number(e.target.value))
                         }
                       />
                     </div>
@@ -392,7 +416,7 @@ const AddListing = () => {
                         placeholder="GymArea in ft"
                         value={formik?.values?.area?.gym}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.gym", e.target.value)
+                          formik?.setFieldValue("area.gym", Number(e.target.value))
                         }
                       />
                     </div>
@@ -404,7 +428,7 @@ const AddListing = () => {
                         placeholder="GardenArea in ft"
                         value={formik?.values?.area?.garden}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.garden", e.target.value)
+                          formik?.setFieldValue("area.garden", Number(e.target.value))
                         }
                       />
                     </div>
@@ -416,7 +440,7 @@ const AddListing = () => {
                         placeholder="parkingArea in ft"
                         value={formik?.values?.area?.parking}
                         onChange={(e) =>
-                          formik?.setFieldValue("area.parking", e.target.value)
+                          formik?.setFieldValue("area.parking", Number(e.target.value))
                         }
                       />
                     </div>
