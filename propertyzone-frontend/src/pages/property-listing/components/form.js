@@ -1,7 +1,7 @@
-import { useProperties } from "../../hooks/property";
+import { useProperties } from "../../../hooks/property";
 import { useFormik } from "formik";
-import { convertToBase64 } from "../../helper-functions/base64";
-import { ensureArray } from "../../helper-functions/formater-helper";
+import { convertToBase64 } from "../../../helper-functions/base64";
+import { ensureArray } from "../../../helper-functions/formater-helper";
 import { useEffect, useState } from "react";
 
 const PropertyListingForm = () => {
