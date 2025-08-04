@@ -1,8 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Social from "../../section-components/social";
+import AuthController from "../../../controllers/authController";
 
 const Navbar2 = () => {
   let publicUrl = process.env.PUBLIC_URL + "/";
+  const navigate = useNavigate();
+  const data = AuthController.getSession();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (data?.user?.name && data?.user?.email) {
+      navigate("/add-listing");
+    } else {
+      const modal = document.getElementById("ltn_add_listing_modal");
+      if (modal) {
+        modal.classList.add("show");
+        modal.style.display = "block";
+        modal.removeAttribute("aria-hidden");
+        modal.setAttribute("aria-modal", "true");
+      }
+    }
+  };
 
   return (
     <div>
@@ -70,7 +88,9 @@ const Navbar2 = () => {
                       <li>
                         {/* header-top-btn */}
                         <div className="header-top-btn">
-                          <Link to="/add-listing">Add Listing</Link>
+                          <a href="#" onClick={handleClick}>
+                            Add Listing
+                          </a>
                         </div>
                       </li>
                     </ul>
@@ -214,6 +234,61 @@ const Navbar2 = () => {
                 <Link to="https://www.instagram.com" target="_blank"><i className="fab fa-instagram" /></Link>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+      <div className="ltn__modal-area ltn__add-to-cart-modal-area----">
+        <div
+          className="modal fade"
+          id="ltn_add_listing_modal"
+          tabIndex={-1}
+        >
+          <div className="modal-dialog modal-md" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  className="close"
+                  onClick={() => {
+                    const modal = document.getElementById("ltn_add_listing_modal");
+                    if (modal) {
+                      modal.classList.remove("show");
+                      modal.style.display = "none";
+                      modal.setAttribute("aria-hidden", "true");
+                      modal.removeAttribute("aria-modal");
+                    }
+                  }}
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="ltn__quick-view-modal-inner">
+                  <div className="modal-product-item">
+                    <div className="row">
+                      <div className="col-12">
+                        <div className="modal-product-info text-center">
+                          <h4>Add Listing</h4>
+                          <p className="added-cart">
+                            You have to Singup first.
+                          </p>
+
+                            <div className="btn-wrapper mt-0">
+                              <button
+                                className="theme-btn-1 btn btn-full-width-2"
+                                type="submit"
+                                onClick={() => navigate("/register")}
+                              >
+                                Sing Up
+                              </button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

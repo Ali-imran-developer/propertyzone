@@ -1,8 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ensureArray } from "../../../helper-functions/formater-helper";
-import { blogData } from "../../../data/blogsData";
+import { useBlogs } from "../../../hooks/blogs";
+import { useAppSelector } from "../../../hooks/store-hook";
+import { useEffect } from "react";
 
 const BlogSlider = () => {
+  const navigate = useNavigate();
+  const { handleGetBlogs } = useBlogs();
+  const { blogsData } = useAppSelector((state) => state.Blogs);
+
+  useEffect(() => {
+    handleGetBlogs();
+
+  }, []);
+
+  const handleNavigate = (item) => {
+    navigate(`/blog-details/${item?._id}`, { state: { item } });
+  };
 
   return (
     <div className={"ltn__blog-area pt-115--- pb-70 go-top "}>
@@ -18,37 +32,37 @@ const BlogSlider = () => {
           </div>
         </div>
         <div className="row  ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal">
-          {ensureArray(blogData)?.map((item, index) => (
+          {ensureArray(blogsData?.blogs)?.map((item, index) => (
             <div key={index} className="col-lg-12">
               <div className="ltn__blog-item ltn__blog-item-3">
                 <div className="ltn__blog-img">
-                  <Link to="/blog-details">
+                  <div style={{cursor: "pointer"}} onClick={() => handleNavigate(item)}>
                     <img src={item?.image ?? ""} alt={item?.title ?? ""} />
-                  </Link>
+                  </div>
                 </div>
                 <div className="ltn__blog-brief">
                   <div className="ltn__blog-meta">
                     <ul>
                       <li className="ltn__blog-author">
-                        <Link to="/team-details">
+                        <div style={{cursor: "pointer"}} onClick={() => handleNavigate(item)}>
                           <i className="far fa-user" />
                           by: {item?.creator ?? ""}
-                        </Link>
+                        </div>
                       </li>
                       <li className="ltn__blog-tags">
-                        <Link to="/blog-grid">
+                        <span style={{marginRight: "6px", cursor: "pointer"}} onClick={() => handleNavigate(item)}>
                           <i className="fas fa-tags" />
                           {item?.tags[0] ?? ""}
-                        </Link>
-                        <Link to="/blog-grid">
+                        </span>
+                        <span style={{cursor: "pointer"}} onClick={() => handleNavigate(item)}>
                           <i className="fas fa-tags" />
                           {item?.tags[1] ?? ""}
-                        </Link>
+                        </span>
                       </li>
                     </ul>
                   </div>
                   <h3 className="ltn__blog-title">
-                    <Link to="/blog-details">{item?.title ?? ""}</Link>
+                    <div style={{cursor: "pointer"}} onClick={()=> handleNavigate(item)}>{item?.title ?? ""}</div>
                   </h3>
                   <div className="ltn__blog-meta-btn">
                     <div className="ltn__blog-meta">
@@ -60,7 +74,7 @@ const BlogSlider = () => {
                       </ul>
                     </div>
                     <div className="ltn__blog-btn">
-                      <Link to="/blog-details">Read more</Link>
+                      <div style={{cursor: "pointer"}} onClick={() => handleNavigate(item)}>Read more</div>
                     </div>
                   </div>
                 </div>

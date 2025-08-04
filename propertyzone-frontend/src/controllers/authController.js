@@ -1,10 +1,17 @@
 import Cookies from "js-cookie";
 import { decryptData, encryptData } from "../helper-functions/encrypted";
-import { setSession } from "../store/slices/authSlice";
+import { clearAuthSlice, setSession } from "../store/slices/authSlice";
 import { APP_KEY, COOKIE_SECRET } from "../config/constants";
+import { apiRequest } from "./apiController";
 import store from "../store";
 
 class AuthController {
+  static registerUser(values) {
+    return apiRequest("post", `/api/auth/register`, values);
+  }
+  static loginUser(values) {
+    return apiRequest("post", `/api/auth/login`, values);
+  }
   static getSession = () => {
     const session = Cookies.get(APP_KEY);
     let decrypted = null;
@@ -28,6 +35,14 @@ class AuthController {
       store.dispatch(setSession(session));
       this.setSession(session);
     }
+  }
+  static removeSession() {
+    Cookies.remove(APP_KEY);
+  }
+  static logout() {
+    store.dispatch(clearAuthSlice());
+    AuthController.removeSession();
+    localStorage.clear();
   }
 }
 

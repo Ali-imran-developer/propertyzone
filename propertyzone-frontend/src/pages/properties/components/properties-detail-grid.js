@@ -3,16 +3,17 @@ import DateCell from "../../../components/shared/components/date-cell";
 import { useProperties } from "../../../hooks/property";
 import { useAppSelector } from "../../../hooks/store-hook";
 import { useEffect } from "react";
-import { ensureArray, formatPrice } from "../../../helper-functions/formater-helper";
-import { topCategories } from "../../../data/topCategories";
+import { ensureArray } from "../../../helper-functions/formater-helper";
 import { useFormik } from "formik";
 import { useReviews } from "../../../hooks/reviews";
 import { LoaderIcon } from "react-hot-toast";
+import Booking from "../../../components/shared/components/booking";
+import TopProducts from "../../../components/shared/components/top-products";
+import TopCategories from "../../../components/shared/components/top-categories";
 
 const ShopDetails = ({ data }) => {
   const { handleGetProperties } = useProperties();
   const { isLoading, handleCreateReviews, handleGetReviews } = useReviews();
-  const { propertyData } = useAppSelector((state) => state.Properties);
   const { reviewsData } = useAppSelector((state) => state.Reviews);
   const initialParams = { page: 1, limit: 5, search: "" };
 
@@ -327,70 +328,9 @@ const ShopDetails = ({ data }) => {
           </div>
           <div className="col-lg-4">
             <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
-              <div className="widget ltn__top-rated-product-widget go-top">
-                <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                  Top Rated Product
-                </h4>
-                <ul>
-                  <li>
-                    {ensureArray(propertyData?.properties)?.map(
-                      (item, index) => (
-                        <div
-                          key={index}
-                          className="top-rated-product-item clearfix"
-                          style={{ marginBottom: "12px" }}
-                        >
-                          <div className="top-rated-product-img">
-                            <Link
-                              to="/product-details"
-                              style={{ width: "100px", height: "auto" }}
-                            >
-                              <img
-                                style={{
-                                  width: "100%",
-                                  height: "auto",
-                                  objectFit: "cover",
-                                }}
-                                src={
-                                  item?.images[0] ??
-                                  "/assets/img/pictures/image-placeholder.jpg"
-                                }
-                                alt={item?.title ?? ""}
-                              />
-                            </Link>
-                          </div>
-                          <div className="top-rated-product-info">
-                            <h6>
-                              <Link to="/shop">{item?.title ?? ""}</Link>
-                            </h6>
-                            <div className="product-price">
-                              <span>Rs. {formatPrice(item?.price) ?? 0}</span>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    )}
-                  </li>
-                </ul>
-              </div>
-              <div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
-                <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                  Top Categories
-                </h4>
-                <ul className="go-top">
-                  <li>
-                    {ensureArray(topCategories)?.map((item, index) => (
-                      <Link
-                        key={index}
-                        to="/blog-grid"
-                        style={{ marginBottom: "10px" }}
-                      >
-                        {item?.name ?? ""} <span>({item?.total ?? 0})</span>
-                      </Link>
-                    ))}
-                  </li>
-                </ul>
-              </div>
+              <Booking propertyName={data?.title} />
+              <TopProducts />
+              <TopCategories />
               <div className="widget ltn__social-media-widget">
                 <h4 className="ltn__widget-title ltn__widget-title-border-2">
                   Follow us

@@ -11,8 +11,9 @@ export const AuthSlice = createSlice({
     setSession: (state, action) => {
       state.session = action.payload;
     },
+    clearAuthSlice: () => initialState,
   },
 });
 
-export const {  setSession } = AuthSlice.actions;
+export const {  setSession, clearAuthSlice } = AuthSlice.actions;
 export default AuthSlice.reducer;

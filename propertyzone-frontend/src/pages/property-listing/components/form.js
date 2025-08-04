@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { convertToBase64 } from "../../../helper-functions/base64";
 import { ensureArray } from "../../../helper-functions/formater-helper";
 import { useEffect, useState } from "react";
+import { LoaderIcon } from "react-hot-toast";
 
 const PropertyListingForm = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -451,13 +452,14 @@ const PropertyListingForm = () => {
                   available. We will contact you to confirm your actual
                   appointment details.
                 </div>
-                <div className="btn-wrapper text-center mt-30">
+                <div className="btn-wrapper text-center mt-30" style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                   <button
+                    style={{width: "220px", display: "flex", alignItems: "center", justifyContent: "center"}}
                     className="btn theme-btn-1 btn-effect-1 text-uppercase"
                     type="submit"
                     disabled={Loading}
                   >
-                    {Loading ? "Loading..." : "Submit Property"}
+                    {Loading ? <LoaderIcon style={{width: "20px", height: "20px"}} />  : "Submit Property"}
                   </button>
                 </div>
               </form>

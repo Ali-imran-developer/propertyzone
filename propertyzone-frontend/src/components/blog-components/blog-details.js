@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Comments from './comments';
 import Sidebar from './sidebar';
+
 class BlogDetails extends Component {
   render() {
     let publicUrl = process.env.PUBLIC_URL+'/'
-    let imagealt = 'image'
 
     return (
 		<div className="ltn__page-details-area ltn__blog-details-area mb-120">
@@ -93,7 +93,7 @@ class BlogDetails extends Component {
 						</li>
 						</ul>
 					</div>
-					<div className="ltn__social-media text-right text-end col-lg-4">
+					<div className="ltn__social-media text-right col-lg-4">
 						<h4>Social Share</h4>
 						<ul>
 						<li><a href="#" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
@@ -110,7 +110,7 @@ class BlogDetails extends Component {
 						<h6>Prev Post</h6>
 						<h3 className="ltn__blog-title"><Link to="#">Tips On Minimalist</Link></h3>
 					</div>
-					<div className="blog-prev blog-next text-right text-end col-lg-6">
+					<div className="blog-prev blog-next text-right col-lg-6">
 						<h6>Next Post</h6>
 						<h3 className="ltn__blog-title"><Link to="#">Less Is More</Link></h3>
 					</div>

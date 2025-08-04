@@ -8,7 +8,7 @@ const Porperties = () => {
   return (
     <div>
       <Navbar />
-      <PageHeader headertitle="Shop" />
+      <PageHeader headertitle="Properties" />
       <PropertiesGrid />
       <CallToAction />
       <Footer />

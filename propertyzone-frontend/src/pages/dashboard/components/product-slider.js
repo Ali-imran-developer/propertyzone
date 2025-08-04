@@ -6,7 +6,6 @@ import { ensureArray } from "../../../helper-functions/formater-helper";
 
 const ProductSlider = () => {
   const navigate = useNavigate();
-  let publicUrl = process.env.PUBLIC_URL + "/";
   const { handleGetProperties } = useProperties();
   const { propertyData } = useAppSelector((state) => state.Properties);
   const initialParams = {

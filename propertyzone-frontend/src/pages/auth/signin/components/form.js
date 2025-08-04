@@ -1,7 +1,35 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../../hooks/auth";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { LoaderIcon } from "react-hot-toast";
+
+const SigninSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email address").required("Email is required"),
+  password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+});
 
 const SignInForm = () => {
   let publicUrl = process.env.PUBLIC_URL + "/";
+  const { isLoading, handleLoginUser } = useAuth();
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: SigninSchema,
+    onSubmit: async (values, { resetForm }) => {
+      console.log("values", values);
+      try {
+        handleLoginUser(values);
+        resetForm({ values: initialValues });
+      } catch (error) {
+        console.error("Error submitting order:", error);
+      }
+    },
+  });
 
   return (
     <div>
@@ -14,27 +42,24 @@ const SignInForm = () => {
                   Sign In <br />
                   To Your Account
                 </h1>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.{" "}
-                  <br />
-                  Sit aliquid, Non distinctio vel iste.
-                </p>
               </div>
             </div>
           </div>
           <div className="row">
             <div className="col-lg-6">
               <div className="account-login-inner">
-                <form method="GET" className="ltn__form-box contact-form-box">
-                  <input type="text" name="email" placeholder="Email*" />
+                <form onSubmit={formik.handleSubmit} className="ltn__form-box contact-form-box">
+                  <input type="email" name="email" value={formik?.values?.email} onChange={formik?.handleChange} placeholder="Email*" />
                   <input
                     type="password"
                     name="password"
+                    value={formik?.values?.password}
+                    onChange={formik?.handleChange}
                     placeholder="Password*"
                   />
                   <div className="btn-wrapper mt-0">
-                    <button className="theme-btn-1 btn btn-block" type="submit">
-                      SIGN IN
+                    <button className="theme-btn-1 btn btn-block" type="submit" style={{width: "240px", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                      {isLoading ? <LoaderIcon style={{width: "20px", height: "20px"}} /> : "SIGN IN"}
                     </button>
                   </div>
                   <div className="go-to-btn mt-20">
