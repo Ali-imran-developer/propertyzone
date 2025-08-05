@@ -18006,13 +18006,14 @@ input.cart-plus-minus-box {
 }
 
 .custom-dropdown-toggle {
-  border: 1px solid #ccc;
+  border: 1px solid #e8e8e8;
   padding: 10px 12px;
   background-color: #fff;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  font-weight: 600; /* semi-bold */
+  font-weight: 600;
+  height: 65px;
 }
 
 .custom-dropdown-menu {
@@ -18045,7 +18046,7 @@ input.cart-plus-minus-box {
 .custom-dropdown-item {
   padding: 10px 12px;
   cursor: pointer;
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 .custom-dropdown-item:hover {

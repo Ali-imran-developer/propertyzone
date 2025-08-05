@@ -68,24 +68,10 @@ const ShopGrid = () => {
                         {ensureArray(propertyData?.properties)?.map((item, index) => (
                             <div key={index} className="ltn__product-item ltn__product-item-4 text-center---">
                               <div className="product-img go-top">
-                                <Link
-                                  to="/product-details"
-                                  style={{
-                                    minWidth: "18rem",
-                                    maxHeight: "12rem",
-                                  }}
-                                >
+                                <Link to={`/product-details/${item?._id}`} style={{ minWidth: "18rem", maxHeight: "12rem" }}>
                                   <img
-                                    src={
-                                      item?.images[0] ??
-                                      "https://www.shorekids.co.nz/wp-content/uploads/2014/08/image-placeholder.jpg"
-                                    }
-                                    alt={item?.title ?? ""}
-                                    style={{
-                                      width: "100%",
-                                      height: "auto",
-                                      objectFit: "cover",
-                                    }}
+                                    src={ item?.images[0] ?? "https://www.shorekids.co.nz/wp-content/uploads/2014/08/image-placeholder.jpg"}
+                                    alt={item?.title ?? ""} style={{ width: "100%", height: "auto", objectFit: "cover" }}
                                   />
                                 </Link>
                                 <div className="product-badge">
@@ -99,7 +85,7 @@ const ShopGrid = () => {
                                   <div className="product-img-location">
                                     <ul>
                                       <li>
-                                        <Link to="/contact">
+                                        <Link to={`/product-details/${item?._id}`}>
                                           <i className="flaticon-pin" />
                                           {item?.address?.address ?? ""},{" "}
                                           {item?.address?.city ?? ""}
@@ -110,7 +96,7 @@ const ShopGrid = () => {
                                   <div className="product-img-gallery go-top">
                                     <ul>
                                       <li>
-                                        <Link to="/product-details">
+                                        <Link to={`/product-details/${item?._id}`}>
                                           <i className="fas fa-camera" />{" "}
                                           {item?.images?.length ?? 0}
                                         </Link>
@@ -127,7 +113,7 @@ const ShopGrid = () => {
                                   </span>
                                 </div>
                                 <h2 className="product-title go-top">
-                                  <Link to="/product-details">
+                                  <Link to={`/product-details/${item?._id}`}>
                                     {item?.title ?? ""}
                                   </Link>
                                 </h2>

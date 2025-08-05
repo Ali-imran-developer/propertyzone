@@ -132,8 +132,91 @@ const getProperties = async (req, res) => {
   }
 };
 
+const getLocation = async (req, res) => {
+  try {
+    const { city } = req.query;
+    if (!city || typeof city !== "string") {
+      return res.status(400).json({ success: false, message: "City is required!"});
+    }
+    const matchedProperties = await Property.find({"address.city": { $regex: new RegExp(city, "i") }}).select("address");
+    const addressList = matchedProperties.map((property) => property.address.address);
+
+    res.json({
+      success: true,
+      total: addressList.length,
+      city,
+      addresses: addressList,
+    });
+  } catch (error) {
+    console.error("Error fetching locations:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+const getPropertyId = async (req, res) => {
+  try {
+    const { city, address } = req.query;
+    if (!city || typeof city !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "City is required and must be a string!",
+      });
+    }
+    if (!address || typeof address !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "Address is required and must be a string!",
+      });
+    }
+    const property = await Property.findOne({
+      "address.city": { $regex: new RegExp(`^${city}$`, "i") },
+      "address.address": { $regex: new RegExp(`^${address}$`, "i") },
+    }).select("_id");
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: "Property not found for provided city and address.",
+      });
+    }
+    res.json({ success: true, propertyId: property._id });
+  } catch (error) {
+    console.error("Error fetching property ID:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+const getSingleProperty = async (req, res) => {
+  const { _id } = req.query;
+  const query = _id;
+  try{
+    if (!query || typeof query !== "string") {
+      return res.status(400).json({ success: false, message: "Id is required!"});
+    }
+    const property = await Property.findOne({ _id: query });
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: "Property not found!",
+      });
+    }
+    res.json(property);
+  }catch(error){
+    console.log(error);
+    return res.status(500).json({ success: false, message: "Internal Server error" });
+  }
+};
+
 module.exports = {
   handleImageUpload,
+  getSingleProperty,
   createProperty,
   getProperties,
+  getPropertyId,
+  getLocation,
 };

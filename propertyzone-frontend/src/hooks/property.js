@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "./store-hook";
-import { setProperties } from "../store/slices/property-slice";
+import { setAddress, setProperties, setPropertyId, setSingleProperty } from "../store/slices/property-slice";
 import propertiesController from "../controllers/properties";
 import toast from "react-hot-toast";
 
@@ -37,5 +37,47 @@ export const useProperties = () => {
     }
   };
 
-  return { Loading, handleGetProperties, handleCreateProperties };
+  const handleGetLocation = async (param) => {
+    try {
+      setLoading(true);
+      const data = await propertiesController.getLocation(param);
+      dispatch(setAddress(data));
+      return data;
+    } catch (error) {
+      console.log("@Error", error);
+      toast.error(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGetLocationId = async (param) => {
+    try {
+      setLoading(true);
+      const data = await propertiesController.getLocationID(param);
+      dispatch(setPropertyId(data?.propertyId))
+      return data;
+    } catch (error) {
+      console.log("@Error", error);
+      toast.error(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGetSingleProperty = async (param) => {
+    try {
+      setLoading(true);
+      const data = await propertiesController.getSingleProperty(param);
+      dispatch(setSingleProperty(data))
+      return data;
+    } catch (error) {
+      console.log("@Error", error);
+      toast.error(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { Loading, handleGetProperties, handleGetLocation, handleGetLocationId, handleCreateProperties, handleGetSingleProperty };
 };

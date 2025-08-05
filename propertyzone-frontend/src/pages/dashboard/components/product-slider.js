@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useProperties } from "../../../hooks/property";
 import { useAppSelector } from "../../../hooks/store-hook";
 import { ensureArray } from "../../../helper-functions/formater-helper";
 
 const ProductSlider = () => {
-  const navigate = useNavigate();
   const { handleGetProperties } = useProperties();
   const { propertyData } = useAppSelector((state) => state.Properties);
   const initialParams = {
@@ -18,10 +17,6 @@ const ProductSlider = () => {
     handleGetProperties(initialParams);
 
   }, [initialParams?.page, initialParams?.limit, initialParams?.search])
-
-  const handleNavigate = (item) => {
-    navigate(`/product-details/${item._id}`, { state: { item } });
-  };
 
   return (
     <div>
@@ -42,36 +37,36 @@ const ProductSlider = () => {
               {ensureArray(propertyData?.properties)?.map((item, index) => (
                 <div key={index} className="ltn__product-item ltn__product-item-4 text-center---">
                   <div className="product-img go-top">
-                    <div onClick={() => handleNavigate(item)} style={{ minWidth: "18rem", maxHeight: "12rem" }}>
+                    <Link to={`/product-details/${item?._id}`} style={{ minWidth: "18rem", maxHeight: "12rem" }}>
                       <img src={item?.images[0] ?? "/assets/img/pictures/image-placeholder.jpg"}
                         alt={item?.title ?? ""} style={{width: "100%", height: "auto", objectFit: "cover"}}
                       />
-                    </div>
-                    <div onClick={() => handleNavigate(item)} className="product-badge" style={{ cursor: "pointer" }}>
+                    </Link>
+                    <Link to={`/product-details/${item?._id}`} className="product-badge">
                       <ul>
                         <li className="sale-badge bg-green">
                           For {item?.status ?? ""}
                         </li>
                       </ul>
-                    </div>
+                    </Link>
                     <div className="product-img-location-gallery">
                       <div className="product-img-location">
                         <ul>
                           <li>
-                            <div onClick={() => handleNavigate(item)} style={{cursor: "pointer"}}>
+                            <Link to={`/product-details/${item?._id}`}>
                               <i className="flaticon-pin" />
                               {item?.address?.address ?? ""}, {item?.address?.city ?? ""}
-                            </div>
+                            </Link>
                           </li>
                         </ul>
                       </div>
                       <div className="product-img-gallery go-top">
                         <ul>
                           <li>
-                            <div onClick={() => handleNavigate(item)} style={{cursor: "pointer"}}>
+                            <Link to={`/product-details/${item?._id}`}>
                               <i className="fas fa-camera" />{" "}
                               {item?.images?.length ?? 0}
-                            </div>
+                            </Link>
                           </li>
                         </ul>
                       </div>
@@ -85,7 +80,7 @@ const ProductSlider = () => {
                       </span>
                     </div>
                     <h2 className="product-title go-top">
-                      <div onClick={() => handleNavigate(item)} style={{cursor: "pointer"}}>{item?.title ?? ""}</div>
+                      <Link to={`/product-details/${item?._id}`}>{item?.title ?? ""}</Link>
                     </h2>
                     <div className="product-description">
                       <p>{item?.description ?? ""}</p>
