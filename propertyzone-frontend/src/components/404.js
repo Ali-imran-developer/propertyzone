@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from './global-components/navbar';
 import PageHeader from './global-components/page-header';
 import Error from './section-components/error';
@@ -15,5 +14,4 @@ const ErrorPage = () => {
     </div>
 }
 
-export default ErrorPage
-
+export default ErrorPage;

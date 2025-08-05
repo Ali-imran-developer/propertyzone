@@ -18046,13 +18046,47 @@ input.cart-plus-minus-box {
 .custom-dropdown-item {
   padding: 10px 12px;
   cursor: pointer;
-  /* font-weight: 600; */
 }
 
 .custom-dropdown-item:hover {
   background-color: #f0f0f0;
 }
 
+.faq-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.faq-item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-question {
+  padding: 15px 20px;
+  background-color: #f5f5f5;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  background-color: #fff;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item:hover .faq-answer {
+  max-height: 500px;
+  padding: 15px 20px;
+}
 
 /* ----------------------------------------------------
     END

@@ -13,7 +13,7 @@ const Banner = () => {
   const { isLoading, handleGetBlogs } = useCities();
   const { handleGetLocation, handleGetLocationId } = useProperties();
   const { cities } = useAppSelector((state) => state.City);
-  const { addressData, propertyId } = useAppSelector((state) => state.Properties);
+  const { addressData } = useAppSelector((state) => state.Properties);
 
   useEffect(() => {
     handleGetBlogs();
@@ -40,8 +40,10 @@ const Banner = () => {
     initialValues,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await handleGetLocationId(values);
-        navigate(`/product-details/${propertyId}`)
+        const response = await handleGetLocationId(values);
+        if (response?.propertyId) {
+          navigate(`/product-details/${response.propertyId}`);
+        }
       } catch (error) {
         console.error("Error submitting order:", error);
       }finally{

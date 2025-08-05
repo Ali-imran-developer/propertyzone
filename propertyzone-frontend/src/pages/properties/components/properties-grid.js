@@ -37,7 +37,7 @@ const ShopGrid = () => {
       <div className="ltn__product-area ltn__product-gutter">
         <div className="container">
           <div className="row">
-            <div className="col-lg-8  mb-100">
+            <div className="col-lg-12 mb-100">
               <div className="tab-content">
                 <div className="tab-pane fade active show" id="liton_product_grid">
                   <div className="ltn__product-tab-content-inner ltn__product-grid-view">
@@ -64,13 +64,13 @@ const ShopGrid = () => {
                     {Loading ? (
                       <Loader />
                     ) : (  
-                      <div className="row" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem", }}>
+                      <div className="row" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", }}>
                         {ensureArray(propertyData?.properties)?.map((item, index) => (
                             <div key={index} className="ltn__product-item ltn__product-item-4 text-center---">
                               <div className="product-img go-top">
                                 <Link to={`/product-details/${item?._id}`} style={{ minWidth: "18rem", maxHeight: "12rem" }}>
                                   <img
-                                    src={ item?.images[0] ?? "https://www.shorekids.co.nz/wp-content/uploads/2014/08/image-placeholder.jpg"}
+                                    src={ item?.images[0] ?? "/assets/img/pictures/image-placeholder.jpg"}
                                     alt={item?.title ?? ""} style={{ width: "100%", height: "auto", objectFit: "cover" }}
                                   />
                                 </Link>
@@ -161,7 +161,7 @@ const ShopGrid = () => {
                 setCurrentPage={setCurrentPage}
               />
             </div>
-            <Sidebar />
+            {/* <Sidebar /> */}
           </div>
         </div>
       </div>
